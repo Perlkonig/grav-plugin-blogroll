@@ -42,7 +42,7 @@ Then, wherever you want a list to appear in your theme (usually in `sidebar.html
 
 The following are parameters you can set in the `with` portion of your `include`. If they are not specified, then the system first looks in your config file and then just makes a guess.
 
-  - `tags`: This is an array of at least one tag that relates to links in your config file. This is the only "required" field in that if nothing is passed, nothing will be displayed.
+  - `tags`: This is an array of at least one tag that relates to links in your config file. This is the only "required" field in that if nothing is passed, and a default isn't defined in your config, nothing will be displayed.
 
   - `combinator`: Is only used if there are at least two tags. If you pass `and`, then only links that contain *all* the provided tags will be displayed. Anything else will be interpreted as `or`.
 
@@ -98,14 +98,14 @@ links:
     description: "Third link"
     link: "http://example.com/3"
     tags: [tag1,tag2]
-    sortkey: ccc    
+    sortkey: aaa    
 ```
 
 - The `name` is what appears in the output.
 
-- If provided, the `description` is added after the name.
+- If provided, the `description` is displayed after the name.
 
-- The `link` is self-explanatory. The `link` field **must be unique across your entire list**! The system won't complain or anything, but you will get undefined merging and sorting results otherwise.
+- The `link` is self-explanatory. **The `link` field must be unique across your entire list!** The system won't complain or anything, but you will get undefined merging and sorting results otherwise.
 
 - The `tags` field is how you generate individual lists. When you `include` the twig file you have to specify one or more tags. The system will pull those links out for display.
 

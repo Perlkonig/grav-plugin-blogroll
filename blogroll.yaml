@@ -19,4 +19,4 @@ links:
     description: "Third link"
     link: "http://example.com/3"
     tags: [tag1,tag2]
-    sortkey: ccc    
+    sortkey: aaa    
