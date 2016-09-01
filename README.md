@@ -26,48 +26,90 @@ You should now have all the plugin files under
 
 # Usage
 
-To use `blogroll` you need to set your pages header with at least a taxonomy tag:
+To use `blogroll` you need to first create your lists of links, as described in the **Configuration** section below.
 
-```
-taxonomy:
-    tag: [tag1, tag2]
-```
-
-Then `include` the twig file somewhere in your theme skeleton (usually in `sidebar.html.twig`) along the following lines:
+Then, wherever you want a list to appear in your theme (usually in `sidebar.html.twig`), `include` the twig file with the required paramters, along the following lines:
 
     ```
     {% if config.plugins.blogroll.enabled %}
       <aside class="widget widget_meta">
-        <h2 class="widget-title">{{'POPULAR TAGS'|t}}</h2>
-        {% include 'partials/blogroll.html.twig' %}
-        </aside>
+        <h2 class="widget-title">{{'SIDE PROJECTS'|t}}</h2>
+        {% include 'partials/blogroll.html.twig' with {'tags': ['projects']} %}
+      </aside>
     {% endif %}
 
     ```
 
-> Remember that the plugin `taxonomylist` must be installed and enabled!
+The following are parameters you can set in the `with` portion of your `include`. If they are not specified, then the system first looks in your config file and then just makes a guess.
 
-# Config Defaults
+  - `tags`: This is an array of at least one tag that relates to links in your config file. This is the only "required" field in that if nothing is passed, nothing will be displayed.
+
+  - `combinator`: Is only used if there are at least two tags. If you pass `and`, then only links that contain *all* the provided tags will be displayed. Anything else will be interpreted as `or`.
+
+  - `orderby`: This tells the system how you want your links sorted. The following are the recognized options, which should be self explanatory. Anything else is interpreted as `asis`, meaning not sorted. They'll appear in whatever order PHP decides.
+
+    - `link`
+    - `description`
+    - `name`
+    - `sortkey`
+
+  - `asc`: If false, then the sorted list will be reversed.
+
+# Configuration
 
 > NOTE: I apologize but I am not versed enough in the Admin plugin and required `blueprints.yaml` code to support it. The only way to change the config is to edit the YAML directly. Pull requests are warmly welcomed!
 
+To change the defaults, copy `blogroll.yaml` to your `user/config/plugins` folder and edit it there. You're going to have to do this at some point to create your list of links. But the copy only needs to include your overrides. You can delete the defaults from the copied file and just put in your links.
+
+## Default Config
+
 ```
 enabled: true
-threshold: 0
 built_in_css: true
+default_tags: []
+default_orderby: 'asis'
+default_combinator: 'or'
+default_asc: true
 ```
-
-To change the defaults, copy `blogroll.yaml` to your `user/config/plugins` folder and edit it there.
 
 - Use the `enabled` field to activate or deactivate the plugin.
 
 - The `built_in_css` field tells the plugin to use the included CSS. To customize, set this to `false` and see the **Customization** section for further instructions.
 
-- The `threshold` field takes a little explaining. 
+- The other `default_*` fields, if given, will be used by the twig file if a field isn't passed in the `with` statement.
 
-  The tags are sized based on how frequently they appear. This is done by first determining the number of times the *most* frequent tag appears (`max`) and then comparing each tag's count (`count`) against it, forming a percentage: `percent = (count/max) * 100`. That `percent` number is then compared against the different tiers in the twig file to determine how it should be sized. 
+## Links
 
-  The `threshold` in the config determines the minimum `percent` a tag must be to even be displayed. A value of 0 shows all tags. A value of 100 only shows the tags whose `counts` equal the `max`. Any value between that will show some subset of your tags. You'll need to do some trial and error to find the right number. It really depends on how many different tags your blog uses and how frequently you use them.
+The `links` portion is where your actual links live. This is all you really need in your `user/config/plugins` copy of `blogroll.yaml`. It should be formatted as follows:
+
+```
+links:
+  - name: Link 1
+    description: "First link"
+    link: "http://example.com/1"
+    tags: [tag1]
+    sortkey: ccc
+  - name: Link 2
+    description: "Second Link"
+    link: "http://example.com/2"
+    tags: [tag1,tag2]
+    sortkey: bbb
+  - name: Link 3
+    description: "Third link"
+    link: "http://example.com/3"
+    tags: [tag1,tag2]
+    sortkey: ccc    
+```
+
+- The `name` is what appears in the output.
+
+- If provided, the `description` is added after the name.
+
+- The `link` is self-explanatory. The `link` field **must be unique across your entire list**! The system won't complain or anything, but you will get undefined merging and sorting results otherwise.
+
+- The `tags` field is how you generate individual lists. When you `include` the twig file you have to specify one or more tags. The system will pull those links out for display.
+
+- The `sortkey` field is completely optional and will likely see little use. It's just a free-form key that you can sort on for those situations where you really want things to appear in a very exact order.
 
 # Customization
 
@@ -83,7 +125,7 @@ To customize the CSS, do the following:
 
 ## Twig
 
-To customize the twig file (including changing the way the various levels are differentiated), do the following:
+To customize the twig file, do the following:
 
   - Copy `blogroll.html.twig` from the plugin's `templates/partials` folder into your theme's `templates/partials` folder.
   - Edit as you see fit.

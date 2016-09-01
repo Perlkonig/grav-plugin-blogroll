@@ -5,19 +5,18 @@ default_orderby: 'asis'
 default_combinator: 'or'
 default_asc: true
 links:
-  - name: Super Duper Games
-    description: "Long-running site where you can play abstract strategy board games"
-    link: "http://superdupergames.org"
-    tags: [projects,gaming]
-    sortkey: aaaaa
-  - name: Abstract Play
-    description: "Eventual successor to Super Duper Games"
-    link: "https://www.abstractplay.com"
-    tags: [projects,gaming]
-    sortkey: bbbbb
-  - name: Tarot-less Gnostica Deck
-    description: "If you want to play Gnostica but not with Tarot"
-    link: "https://drive.google.com/drive/folders/0Bw8J0V9P_9hMajBCSUVIQWY5Y0E"
-    tags: [projects,gaming]
-    sortkey: ccccc
-    
+  - name: Link 1
+    description: "First link"
+    link: "http://example.com/1"
+    tags: [tag1]
+    sortkey: ccc
+  - name: Link 2
+    description: "Second Link"
+    link: "http://example.com/2"
+    tags: [tag1,tag2]
+    sortkey: bbb
+  - name: Link 3
+    description: "Third link"
+    link: "http://example.com/3"
+    tags: [tag1,tag2]
+    sortkey: ccc    

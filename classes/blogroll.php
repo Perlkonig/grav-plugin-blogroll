@@ -68,7 +68,7 @@ class Blogroll
         if ($combinator === 'and') {
             $links = array_shift($links_by_tag);
             foreach ($links_by_tag as $key => $value) {
-                $links = array_intersect($links, $value);
+                $links = array_intersect_assoc($links, $value);
             }
         }
         //Anything other than 'and' is interpreted as 'or'

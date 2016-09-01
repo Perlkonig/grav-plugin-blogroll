@@ -1,7 +1,7 @@
 name: Blogroll
 version: 1.0.0
 description: Maintain and selectively display lists of links
-icon: plug
+icon: list-ul
 author:
   name: Aaron Dalton
   email: aaron@daltons.ca
