@@ -2,6 +2,10 @@
 
 The **Blogroll** Plugin is for [Grav CMS](http://github.com/getgrav/grav). It allows you to maintain and selectively display a list of links.
 
+![Blogroll Screen Capture](assets/blogroll.png)
+
+> NOTE: The appearance will differ from the screen capture depending on your base theme. See the **Customization** section for instructions on how to change the styling.
+
 # Installation
 
 Installing the Blogroll plugin can be done in one of two ways. The GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file.
