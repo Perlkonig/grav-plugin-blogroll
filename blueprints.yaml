@@ -1,0 +1,31 @@
+name: Blogroll
+version: 0.1.0
+description: Maintain and selectively display lists of links
+icon: plug
+author:
+  name: Aaron Dalton
+  email: aaron@daltons.ca
+homepage: https://github.com/aaron-dalton/grav-plugin-blogroll
+demo: http://demo.yoursite.com
+keywords: grav, plugin, etc
+bugs: https://github.com/aaron-dalton/grav-plugin-blogroll/issues
+readme: https://github.com/aaron-dalton/grav-plugin-blogroll/blob/develop/README.md
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool
+    text_var:
+      type: text
+      label: Text Variable
+      help: Text to add to the top of a page
