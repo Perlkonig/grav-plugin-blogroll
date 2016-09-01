@@ -1,0 +1,48 @@
+{# Robust check for each of the required parameters: tags, combinator, orderby, and asc #}
+{% if tags is not defined %}
+	{% if config.plugins.blogroll.default_tags is defined %}
+		{% set tags = config.plugins.blogroll.default_tags %}
+	{% else %}
+		{% set tags = [] %}
+	{% endif %}
+{% endif %}
+{% if combinator is not defined %}
+	{% if config.plugins.blogroll.default_combinator is defined %}
+		{% set combinator = config.plugins.blogroll.default_combinator %}
+	{% else %}
+		{% set combinator = 'or' %}
+	{% endif %}
+{% endif %}
+{% if orderby is not defined %}
+	{% if config.plugins.blogroll.default_orderby is defined %}
+		{% set orderby = config.plugins.blogroll.default_orderby %}
+	{% else %}
+		{% set orderby = 'asis' %}
+	{% endif %}
+{% endif %}
+{% if asc is not defined %}
+	{% if config.plugins.blogroll.default_asc is defined %}
+		{% set asc = config.plugins.blogroll.default_asc %}
+	{% else %}
+		{% set asc = true %}
+	{% endif %}
+{% endif %}
+
+{# Get the list of links in the correct order #}
+{% set links = blogroll.get(tags, combinator, orderby, asc) %}
+
+{# Output the list #}
+<div class="blogroll">
+	<ul>
+		{% for link in links %}
+		<li>
+			<a href="{{ link.link }}">
+				{{ link.name }}
+				{% if link.description %}
+					<div class="description">{{ link.description }}</div>
+				{% endif %}
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>

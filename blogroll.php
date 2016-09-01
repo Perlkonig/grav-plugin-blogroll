@@ -23,41 +23,32 @@ class BlogrollPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0]
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+            'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0]
         ];
     }
 
-    /**
-     * Initialize the plugin
-     */
-    public function onPluginsInitialized()
+    public function onTwigTemplatePaths()
     {
-        // Don't proceed if we are in the admin plugin
-        if ($this->isAdmin()) {
-            return;
-        }
-
-        // Enable the main event we are interested in
-        $this->enable([
-            'onPageContentRaw' => ['onPageContentRaw', 0]
-        ]);
+        //Load the built-in twig unless overridden
+        $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
 
-    /**
-     * Do some work for this event, full details of events can be found
-     * on the learn site: http://learn.getgrav.org/plugins/event-hooks
-     *
-     * @param Event $e
-     */
-    public function onPageContentRaw(Event $e)
+    public function onTwigSiteVariables()
     {
-        // Get a variable from the plugin configuration
-        $text = $this->grav['config']->get('plugins.blogroll.text_var');
+        //Load the custom PHP for generating the lists
+        require_once __DIR__ . '/classes/blogroll.php';
 
-        // Get the current raw content
-        $content = $e['page']->getRawContent();
+        //Pass a reference to the custom object to the templates
+        $this->grav['twig']->twig_vars['blogroll'] = new Blogroll();
 
-        // Prepend the output with the custom text and set back on the page
-        $e['page']->setRawContent($text . "\n\n" . $content);
+        //Load the correct CSS based on the `built_in_css` field
+        if ($this->config->get('plugins.blogroll.built_in_css')) {
+            $this->grav['assets']
+                ->add('plugin://blogroll/assets/blogroll.css');
+        } else {
+            $this->grav['assets']
+                -> add('theme://assets/blogroll.css');
+        }
     }
 }

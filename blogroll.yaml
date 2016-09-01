@@ -1,2 +1,23 @@
 enabled: true
-text_var: Custom Text added by the **Blogroll** plugin (disable plugin to remove)
+built_in_css: true
+default_tags: []
+default_orderby: 'asis'
+default_combinator: 'or'
+default_asc: true
+links:
+  - name: Super Duper Games
+    description: "Long-running site where you can play abstract strategy board games"
+    link: "http://superdupergames.org"
+    tags: [projects,gaming]
+    sortkey: aaaaa
+  - name: Abstract Play
+    description: "Eventual successor to Super Duper Games"
+    link: "https://www.abstractplay.com"
+    tags: [projects,gaming]
+    sortkey: bbbbb
+  - name: Tarot-less Gnostica Deck
+    description: "If you want to play Gnostica but not with Tarot"
+    link: "https://drive.google.com/drive/folders/0Bw8J0V9P_9hMajBCSUVIQWY5Y0E"
+    tags: [projects,gaming]
+    sortkey: ccccc
+    
